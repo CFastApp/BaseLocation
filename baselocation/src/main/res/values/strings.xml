@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reintentar">REINTENTAR</string>
+    <string name="error_de_conexion">Error de Conexión</string>
+    <string name="no_se_ha_podido_conectar_con_el_servidor_comprueba_tu_conexion_a_internet_y_vuelve_a_intentarlo">No se ha podido conectar con el servidor. Comprueba tu conexión a internet y vuelve a intentarlo</string>
+
+</resources>
