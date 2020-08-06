@@ -1,4 +1,4 @@
-package com.cfastapp.baselocation.base
+package com.cfastapp.baselocation.base.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.databinding.ViewDataBinding
-import com.cfastapp.baseabstract.base.activity.BaseActivity
 import com.cfastapp.baselocation.util.ResponseEnabledGPS
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
