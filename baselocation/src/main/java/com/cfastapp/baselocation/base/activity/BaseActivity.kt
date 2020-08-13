@@ -22,9 +22,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
 
     protected lateinit var binding: B
     private var progressDialog = ProgressDialog()
-    private var progressIniciado = false
     private var sinInternetDialog = SinInternetDialog()
-    private var sinInternetIniciado = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,26 +37,21 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity() {
     }
 
     fun showSinInternet() {
-        if (!sinInternetIniciado) {
+        if (!sinInternetDialog.isVisible) {
             sinInternetDialog.isCancelable = false
             sinInternetDialog.show(supportFragmentManager, "")
-            sinInternetIniciado = true
         }
     }
 
     fun showProgressDialog() {
-        if (!progressIniciado) {
+        if (!progressDialog.isVisible) {
             progressDialog.isCancelable = false
-            progressIniciado = true
             progressDialog.show(supportFragmentManager, "")
         }
     }
 
     fun hideProgressDialog() {
-        if (progressIniciado) {
-            progressDialog.dismiss()
-            progressIniciado = false
-        }
+        if (progressDialog.isVisible) progressDialog.dismiss()
     }
 
     fun validarConexionInternet(): Boolean {

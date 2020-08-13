@@ -13,13 +13,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.cfastapp.baselocation.dialog.ProgressDialog
+import com.cfastapp.baselocation.dialog.SinInternetDialog
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     lateinit var binding: B
     private var progressDialog = ProgressDialog()
-    private var progressIniciado = false
+    private var sinInternetDialog = SinInternetDialog()
 
     abstract fun getLayout(): Int
     abstract fun initOnClick()
@@ -43,17 +44,22 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     }
 
     fun showProgressDialog() {
-        if (!progressIniciado) {
-            progressIniciado = true
+        if (!progressDialog.isVisible) {
             progressDialog.isCancelable = false
             progressDialog.show(requireFragmentManager(), "")
         }
     }
 
     fun hideProgressDialog() {
-        if (progressIniciado) {
-            progressIniciado = false
+        if (progressDialog.isVisible) {
             progressDialog.dismiss()
+        }
+    }
+
+    fun showSinInternet() {
+        if (!sinInternetDialog.isVisible) {
+            sinInternetDialog.isCancelable = false
+            sinInternetDialog.show(requireFragmentManager(), "")
         }
     }
 
