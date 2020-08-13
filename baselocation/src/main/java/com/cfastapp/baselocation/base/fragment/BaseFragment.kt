@@ -20,6 +20,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     lateinit var binding: B
     private var progressDialog = ProgressDialog()
+    private var progressIniciado = false
     private var sinInternetDialog = SinInternetDialog()
 
     abstract fun getLayout(): Int
@@ -44,14 +45,16 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     }
 
     fun showProgressDialog() {
-        if (!progressDialog.isVisible) {
+        if (!progressIniciado) {
+            progressIniciado = true
             progressDialog.isCancelable = false
             progressDialog.show(requireFragmentManager(), "")
         }
     }
 
     fun hideProgressDialog() {
-        if (progressDialog.isVisible) {
+        if (progressIniciado) {
+            progressIniciado = false
             progressDialog.dismiss()
         }
     }
