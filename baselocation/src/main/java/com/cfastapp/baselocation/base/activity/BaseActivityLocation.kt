@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.databinding.ViewDataBinding
 import com.cfastapp.baselocation.util.ResponseEnabledGPS
@@ -37,38 +36,14 @@ abstract class BaseActivityLocation<B : ViewDataBinding>(
     }
 
     private fun permisoAccesoUbicacion() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (ActivityCompat.checkSelfPermission(
-                    baseContext, Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    baseContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                //CUANDO EL PERMISO NO FUE ACEPTADO PREVIAMENTE SE SOLICITARAN LOS PERMISOS
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                    ),
-                    PERMISO_UBICACION
-                )
-            } else {
-                enabledGPS()
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(
-                    baseContext, Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                //CUANDO EL PERMISO NO FUE ACEPTADO PREVIAMENTE SE SOLICITARAN LOS PERMISOS
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISO_UBICACION
-                )
-            } else {
-                enabledGPS()
-            }
+        if (ActivityCompat.checkSelfPermission(
+                baseContext, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            //CUANDO EL PERMISO NO FUE ACEPTADO PREVIAMENTE SE SOLICITARAN LOS PERMISOS
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISO_UBICACION
+            )
         } else {
             enabledGPS()
         }
@@ -80,21 +55,11 @@ abstract class BaseActivityLocation<B : ViewDataBinding>(
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISO_UBICACION -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                        grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                        enabledGPS()
-                    } else {
-                        permissionLocationDenied()
-                    }
-                } else{
-                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        enabledGPS()
-                    } else {
-                        permissionLocationDenied()
-                    }
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    enabledGPS()
+                } else {
+                    permissionLocationDenied()
                 }
-
                 return
             }
         }
